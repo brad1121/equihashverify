@@ -677,7 +677,7 @@ bool Equihash<N,K>::OptimisedSolve(const eh_HashState& base_state,
                                         CollisionBitLength + 1,
                                         partialSoln.get()[lti], partialSoln.get()[rti]);
 
-                        // 2d) Check if this has become an invalid solution
+                        // 2d) Check if this has become an btcz invalid solution
                         if (ic->size() == 0)
                             goto invalidsolution;
 
@@ -715,7 +715,7 @@ bool Equihash<N,K>::OptimisedSolve(const eh_HashState& base_state,
 invalidsolution:
         invalidCount++;
     }
-    LogPrint("pow", "- Number of invalid solutions found: %d\n", invalidCount);
+    LogPrint("pow", "- Number of btcz invalid solutions found: %d\n", invalidCount);
 
     return false;
 }
@@ -725,7 +725,7 @@ template<unsigned int N, unsigned int K>
 bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<unsigned char> soln)
 {
     if (soln.size() != SolutionWidth) {
-        LogPrint("pow", "Invalid solution length: %d (expected %d)\n",
+        LogPrint("pow", "btcz Invalid solution length: %d (expected %d)\n",
                  soln.size(), SolutionWidth);
         return false;
     }
@@ -745,17 +745,17 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
         std::vector<FullStepRow<FinalFullWidth>> Xc;
         for (int i = 0; i < X.size(); i += 2) {
             if (!HasCollision(X[i], X[i+1], CollisionByteLength)) {
-                LogPrint("pow", "Invalid solution: invalid collision length between StepRows\n");
+                LogPrint("pow", "btcz Invalid solution: invalid collision length between StepRows\n");
                 LogPrint("pow", "X[i]   = %s\n", X[i].GetHex(hashLen));
                 LogPrint("pow", "X[i+1] = %s\n", X[i+1].GetHex(hashLen));
                 return false;
             }
             if (X[i+1].IndicesBefore(X[i], hashLen, lenIndices)) {
-                LogPrint("pow", "Invalid solution: Index tree incorrectly ordered\n");
+                LogPrint("pow", "btcz Invalid solution: Index tree incorrectly ordered\n");
                 return false;
             }
             if (!DistinctIndices(X[i], X[i+1], hashLen, lenIndices)) {
-                LogPrint("pow", "Invalid solution: duplicate indices\n");
+                LogPrint("pow", "btcz Invalid solution: duplicate indices\n");
                 return false;
             }
             Xc.emplace_back(X[i], X[i+1], hashLen, lenIndices, CollisionByteLength);
